@@ -9,6 +9,8 @@ from django.contrib import messages
 from datetime import datetime
 import logging
 import json
+from .restapis import *
+from .models import *
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -97,7 +99,7 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
-        url = "hhttps://b8578b0f.us-south.apigw.appdomain.cloud/dealerships/dealer-get"
+        url = "https://b8578b0f.us-south.apigw.appdomain.cloud/dealerships/dealer-get"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         # Concat all dealer's short name
