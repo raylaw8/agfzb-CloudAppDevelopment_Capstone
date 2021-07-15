@@ -3,6 +3,9 @@ import json
 # import related models here
 from requests.auth import HTTPBasicAuth
 from . import models
+from ibm_watson import NaturalLanguageUnderstandingV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions
 
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
@@ -16,9 +19,11 @@ def get_request(url, **kwargs):
     except:
         # If any error occurs
         print("Network exception occurred")
+    print (url, kwargs)
     status_code = response.status_code
     print("With status {} ".format(status_code))
     json_data = json.loads(response.text)
+    print(json_data)
     return json_data
 
 # Create a `post_request` to make HTTP POST requests
@@ -80,10 +85,10 @@ def get_dealer_reviews_by_id_from_cf(url, dealerId):
                 car_model = 'none', car_year= 'none', sentiment= "none")
                 
             review_obj.sentiment = analyze_review_sentiments(review_obj.review)
-            print(review_obj.sentiment)
-                    
+            # print(review_obj.sentiment) 
             results.append(review_obj)
-
+        
+        print(json_result)
     return results
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
@@ -92,8 +97,8 @@ def get_dealer_reviews_by_id_from_cf(url, dealerId):
 # - Get the returned sentiment label such as Positive or Negative
 
 def analyze_review_sentiments(text):
-    api_key = "UNL1ShV-c2bAwfGGyqQFjE-qVOOE-yPskbDybk8CWro0"
-    url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/1bcae669-efa9-4160-9535-18d3807000a3"
+    api_key = "SVB-qrAT6b0cDpUP9jWsYFi5n_r8rA1XioyyrsoxhMJL"
+    url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/f9372bac-9f73-4d01-b465-115f1b046b58"
     texttoanalyze= text
     version = '2020-08-01'
     authenticator = IAMAuthenticator(api_key)
