@@ -12,7 +12,8 @@
     <!--Add a nav bar here -->
     {% include 'navbar.html' %}
     <!-- Add reviews as cards -->
-    <main class="container" style="padding: 3%;">
+    {% if reviews %}
+    <div class="container">
         <div class="card-columns">
             {% for review in reviews %}
                 <div class="card" style="height: 300px; overflow: scroll; overflow-x: hidden;">
@@ -25,7 +26,8 @@
                 </div>
             {% endfor %}
         </div>
-    </main>
+    </div>
+    {% endif %}
     </body>
 
 </html>

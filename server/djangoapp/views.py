@@ -103,10 +103,11 @@ def get_dealerships(request):
         # Get dealers from the URL
         dealerships = restapis.get_dealers_from_cf(url)
         # Concat all dealer's short name
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
         # Return a list of dealer short name
-        return HttpResponse(dealer_names)        
-        #return render(request, 'djangoapp/index.html', context)
+        #return HttpResponse(dealer_names) 
+        context['dealerships'] = dealerships       
+        return render(request, 'djangoapp/index.html', context)
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
@@ -131,8 +132,10 @@ def add_review(request, dealer_id):
     if request.method == "POST":
         if request.user.is_authenticated:
             form = request.POST
+            username = request.user.username
+            print (username)
             review = {
-                "name": "{request.user.first_name} {request.user.last_name}",
+                "name": username,
                 "dealership": dealer_id,
                 "review": form["content"],
                 "purchase": form.get("purchasecheck"),
